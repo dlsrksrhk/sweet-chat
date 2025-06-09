@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -49,5 +50,21 @@ public class ChatServiceImpl implements ChatService {
         message.setTimestamp(entity.getSendedAt());
 
         messagingTemplate.convertAndSend("/topic/chatroom." + roomId, message);
+    }
+
+    @Override
+    public List<ChatMessageDto> getChatHistoryByRoomId(Long roomId) {
+        List<ChatMessage> chatMessages = chatMessageRepository.findByRoomIdOrderByTimestampAsc(roomId);
+
+        return chatMessages.stream()
+                .map(chatMessage -> {
+                    ChatMessageDto msg = new ChatMessageDto();
+                    msg.setRoomId(roomId);
+                    msg.setSender(chatMessage.getSender().getUsername());
+                    msg.setContent(chatMessage.getContent());
+                    msg.setTimestamp(chatMessage.getSendedAt());
+                    return msg;
+                })
+                .toList();
     }
 }

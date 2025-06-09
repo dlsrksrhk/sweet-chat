@@ -1,9 +1,9 @@
-package com.sweet.chat.web.api.command;
+package com.sweet.chat.security.api.command;
 
 import lombok.Data;
 
 @Data
-public class SignupRequest {
+public class LoginRequest {
     private String username;
     private String password;
 }
