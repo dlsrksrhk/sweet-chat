@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "NotoSansMedium";
+  src: url("/NotoSans-Medium.ttf");
+}
+
+body * {
+  font-family: "NotoSansMedium";
+}

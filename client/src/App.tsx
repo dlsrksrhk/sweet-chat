@@ -1,11 +1,10 @@
 import "./App.css";
+import Login from "./components/Login";
 
 function App() {
   return (
     <>
-      <h1 className="text-3xl bg-red-700 font-bold underline">
-        React 19 with Tailwind CSS v4
-      </h1>
+      <Login />
     </>
   );
 }
