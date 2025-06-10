@@ -54,7 +54,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public List<ChatMessageDto> getChatHistoryByRoomId(Long roomId) {
-        List<ChatMessage> chatMessages = chatMessageRepository.findByRoomIdOrderByTimestampAsc(roomId);
+        List<ChatMessage> chatMessages = chatMessageRepository.findByRoomIdOrderBySendedAtAsc(roomId);
 
         return chatMessages.stream()
                 .map(chatMessage -> {
