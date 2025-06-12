@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type LoginRequest = {
   username: string;
@@ -7,6 +8,8 @@ type LoginRequest = {
 };
 
 function Login() {
+  const navigate = useNavigate();
+
   const [request, setRequest] = useState<LoginRequest>({
     username: "",
     password: "",
@@ -26,6 +29,7 @@ function Login() {
         const jwtToken = res.data.token;
         if (jwtToken !== null) {
           sessionStorage.setItem("jwt", jwtToken);
+          navigate(`/home`);
         }
       });
   };
