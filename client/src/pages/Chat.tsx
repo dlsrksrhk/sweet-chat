@@ -1,4 +1,5 @@
 import MainLayout from "../components/MainLayout";
+import Message from "../components/Message";
 
 function Chat() {
   return (
@@ -44,16 +45,10 @@ function Chat() {
           {/* 채팅 영역 */}
           <div className="w-full overflow-y-scroll flex-1 flex flex-col p-4 gap-3">
             {/* Message1 */}
-            <div
-              className={`w-fit p-3 rounded-md ml-auto bg-blue-600 text-white`}
-            >
-              <p>하위!</p>
-            </div>
+            <Message message="하위" type="send" />
 
             {/* Message2 */}
-            <div className={`w-fit p-3 rounded-md bg-gray-100 text-black`}>
-              <p>어키 하위~~</p>
-            </div>
+            <Message message="어키 하위~~" type="receive" />
           </div>
 
           {/* 채팅창 영역 */}

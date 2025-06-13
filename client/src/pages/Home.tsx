@@ -1,5 +1,3 @@
-import { Logout, Send } from "@mui/icons-material";
-import HomeIcon from "@mui/icons-material/Home";
 import MainLayout from "../components/MainLayout";
 
 function Home() {
