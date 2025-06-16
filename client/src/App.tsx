@@ -9,10 +9,10 @@ function App() {
   return (
     <>
       <Routes>
-        {/* <Route path="/" element={<Login />} /> */}
-        <Route path="/" element={<ChatTest />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/chat" element={<Chat />} />
+        {/* <Route path="/chat" element={<ChatTest />} /> */}
         {/* <Route path="*" element={<Notfound />} /> */}
       </Routes>
     </>

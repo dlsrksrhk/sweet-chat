@@ -7,10 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 @Controller
@@ -21,7 +24,9 @@ public class ChatController {
     @MessageMapping("/chat/{roomId}")
     public void sendMessage(@DestinationVariable Long roomId,
                             SendChatMessageRequest request,
-                            @AuthenticationPrincipal UserDetails sender) {
-        chatService.sendMessage(roomId, request, sender.getUsername());
+                            Principal principal) {
+
+        String username = principal.getName();
+        chatService.sendMessage(roomId, request, username);
     }
 }

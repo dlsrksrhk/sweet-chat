@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type LoginRequest = {
@@ -9,6 +9,13 @@ type LoginRequest = {
 
 function Login() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("jwt");
+    if (token) {
+      navigate("/"); // JWT 있으면 홈으로 리디렉트
+    }
+  }, []);
 
   const [request, setRequest] = useState<LoginRequest>({
     username: "",
@@ -29,7 +36,7 @@ function Login() {
         const jwtToken = res.data.token;
         if (jwtToken !== null) {
           sessionStorage.setItem("jwt", jwtToken);
-          navigate(`/home`);
+          navigate(`/`);
         }
       });
   };

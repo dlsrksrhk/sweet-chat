@@ -5,17 +5,20 @@ import { Client } from "@stomp/stompjs";
 const ChatTest = () => {
   const roomId = 1; // 기본 채팅방 ID 설정
   const jwtToken = sessionStorage.getItem("jwt");
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<string[]>(["하위"]);
   const clientRef = useRef<Client | null>(null);
 
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8080/ws/chat");
+    const socket = new SockJS(
+      `http://localhost:8080/ws/chat?token=${jwtToken}`
+    );
 
     const stompClient = new Client({
       webSocketFactory: () => socket,
       connectHeaders: {
         Authorization: "Bearer " + jwtToken,
       },
+      debug: (str) => console.log("[STOMP DEBUG]:", str),
       reconnectDelay: 5000,
       onConnect: () => {
         console.log("✅ STOMP connected");

@@ -1,8 +1,10 @@
 import { Logout, Send } from "@mui/icons-material";
 import HomeIcon from "@mui/icons-material/Home";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Side() {
+  const navigate = useNavigate();
+
   return (
     <aside className="w-fit h-screen p-6 border-r border-gray-300 flex flex-col justify-between">
       {/* Home버튼 + People Page ~ Chat Page */}
@@ -17,8 +19,13 @@ function Side() {
 
       {/* Logout Button */}
       <div>
-        <button onClick={() => console.log("logout")}>
-          <Logout className="text-2xl text-deep-purple-900" />
+        <button
+          onClick={() => {
+            sessionStorage.removeItem("jwt");
+            navigate("/");
+          }}
+        >
+          <Logout className="text-2xl text-deep-purple-900 cursor-pointer" />
         </button>
       </div>
     </aside>

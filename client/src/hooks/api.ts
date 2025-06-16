@@ -1,11 +1,13 @@
 import axios, { AxiosError, type AxiosRequestConfig } from "axios";
 import type { ChatMessage } from "../types/chat-message";
+import type { ChatRoom } from "../types/chat-room";
 
 const getAxiosConfig = (): AxiosRequestConfig => {
   const token = sessionStorage.getItem("jwt");
+
   return {
     headers: {
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   };
@@ -28,4 +30,23 @@ export const getChatMessages = async (): Promise<ChatMessage[]> => {
     getAxiosConfig()
   );
   return response.data._embedded.cars;
+};
+
+export const createChatRoom = async (roomName: string): Promise<ChatRoom> => {
+  const response = await axios.post(
+    `${import.meta.env.VITE_API_BASE_URL}/api/chatrooms`,
+    { name: roomName },
+    getAxiosConfig()
+  );
+
+  return response.data;
+};
+
+export const getChatRoomList = async (): Promise<ChatRoom[]> => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}/api/chatrooms`,
+    getAxiosConfig()
+  );
+
+  return response.data;
 };
