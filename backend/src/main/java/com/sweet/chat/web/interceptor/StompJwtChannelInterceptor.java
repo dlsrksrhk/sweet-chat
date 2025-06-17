@@ -2,6 +2,7 @@ package com.sweet.chat.web.interceptor;
 
 import com.sweet.chat.security.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.messaging.Message;
@@ -34,7 +35,7 @@ public class StompJwtChannelInterceptor implements ChannelInterceptor {
 
         // SEND 프레임만 처리 (CONNECT에서도 가능)
         if (StompCommand.SEND.equals(accessor.getCommand()) || StompCommand.SUBSCRIBE.equals(accessor.getCommand())) {
-            String token = accessor.getFirstNativeHeader("Authorization");
+            String token = accessor.getFirstNativeHeader(HttpHeaders.AUTHORIZATION);
             if (token != null && token.startsWith("Bearer ")) {
                 token = token.substring(7);
                 String username = jwtUtil.extractUsername(token);

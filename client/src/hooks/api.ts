@@ -24,12 +24,14 @@ axios.interceptors.response.use(
   }
 );
 
-export const getChatMessages = async (): Promise<ChatMessage[]> => {
+export const getChatMessages = async (
+  roomId: number
+): Promise<ChatMessage[]> => {
   const response = await axios.get(
-    `${import.meta.env.VITE_API_BASE_URL}/cars`,
+    `${import.meta.env.VITE_API_BASE_URL}/api/chatrooms/${roomId}/messages`,
     getAxiosConfig()
   );
-  return response.data._embedded.cars;
+  return response.data;
 };
 
 export const createChatRoom = async (roomName: string): Promise<ChatRoom> => {

@@ -1,27 +1,33 @@
 import { useEffect, useState } from "react";
 import { getChatRoomList } from "../hooks/api";
 import ChatCreateButton from "./ChatCreateButton";
-import ChatRoom from "./ChatRoom";
-import type { ChatRoom as ChatRoomInfo } from "../types/chat-room";
+import ChatRoomItem from "./ChatRoomItem";
+import type { ChatRoom } from "../types/chat-room";
 
-function ChatRoomList() {
-  const [chatRooms, setChatRooms] = useState<ChatRoomInfo[]>([]);
+function ChatRoomList({
+  setSelectedRoom,
+}: {
+  setSelectedRoom: (room: ChatRoom) => void;
+}) {
+  const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
 
   useEffect(() => {
     getChatRoomList().then((rooms) => {
-      console.log("ChatRoomList render", rooms);
       setChatRooms(rooms);
     });
   }, []);
 
+  const handleRoomItemClick = (room: ChatRoom) => {
+    setSelectedRoom(room);
+  };
+
   return (
     <div className="h-screen min-w-60 flex flex-col bg-gray-50">
-      <ChatRoom roomName="한경선" lastMessageTime="3d ago" />
       {chatRooms.map((room) => (
-        <ChatRoom
+        <ChatRoomItem
           key={room.id}
-          roomName={room.name}
-          lastMessageTime={room.createdAt}
+          chatRoom={room}
+          onClickCallback={handleRoomItemClick}
         />
       ))}
       <ChatCreateButton setChatRooms={setChatRooms} />

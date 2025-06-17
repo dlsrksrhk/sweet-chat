@@ -24,7 +24,7 @@ public class ChatMessage {
     @ManyToOne
     private ChatRoom room;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User sender;
 
     @Column(nullable = false, columnDefinition = "TEXT")

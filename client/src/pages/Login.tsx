@@ -28,7 +28,7 @@ function Login() {
 
   const handleLogin = () => {
     axios
-      .post(import.meta.env.VITE_API_BASE_URL + "/login", request, {
+      .post(import.meta.env.VITE_API_BASE_URL + "/api/login", request, {
         headers: { "Content-Type": "application/json" },
       })
       .then((res) => {

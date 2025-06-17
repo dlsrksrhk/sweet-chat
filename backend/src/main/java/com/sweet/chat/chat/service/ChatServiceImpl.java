@@ -35,21 +35,27 @@ public class ChatServiceImpl implements ChatService {
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username));
 
         // DB에 메시지 저장
-        ChatMessage entity = new ChatMessage();
-        entity.setRoom(room);
-        entity.setSender(sender);
-        entity.setContent(request.getContent());
-        entity.setSendedAt(LocalDateTime.now());
-        chatMessageRepository.save(entity);
+        ChatMessage chatMessage = saveMessage(room, request.getContent(), sender);
 
         // 브로드캐스트할 메시지
         ChatMessageDto message = new ChatMessageDto();
         message.setRoomId(roomId);
         message.setContent(request.getContent());
         message.setSender(sender.getUsername());
-        message.setTimestamp(entity.getSendedAt());
+        message.setTimestamp(chatMessage.getSendedAt());
 
         messagingTemplate.convertAndSend("/topic/chatroom." + roomId, message);
+    }
+
+    @Override
+    public ChatMessage saveMessage(ChatRoom chatRoom, String message, User sender) {
+        ChatMessage entity = new ChatMessage();
+        entity.setRoom(chatRoom);
+        entity.setSender(sender);
+        entity.setContent(message);
+        entity.setSendedAt(LocalDateTime.now());
+        chatMessageRepository.save(entity);
+        return entity;
     }
 
     @Override
