@@ -9,6 +9,13 @@ function ChatRoomItem({
   chatRoom: ChatRoom;
   onClickCallback: (chatRoom: ChatRoom) => void;
 }) {
+  const lastMessageTime = !chatRoom.lastMessageInfo
+    ? "채팅 없음"
+    : formatDistanceToNow(new Date(chatRoom.lastMessageInfo.timestamp), {
+        addSuffix: true,
+        locale: ko,
+      });
+
   return (
     <div
       onClick={() => onClickCallback(chatRoom)}
@@ -20,13 +27,7 @@ function ChatRoomItem({
       />
       <div>
         <p className="text-black font-bold text-lg">{chatRoom.name}</p>
-        <p className="text-gray-500 text-sm">
-          {chatRoom.lastMessageInfo &&
-            formatDistanceToNow(new Date(chatRoom.lastMessageInfo.timestamp), {
-              addSuffix: true,
-              locale: ko,
-            })}
-        </p>
+        <p className="text-gray-500 text-sm">{lastMessageTime}</p>
       </div>
     </div>
   );

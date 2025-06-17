@@ -17,11 +17,13 @@ const getAxiosConfig = (): AxiosRequestConfig => {
 axios.interceptors.response.use(
   (response) => response, // 정상 응답은 그대로 반환
   (error: AxiosError) => {
-    if (error.response && error.response.status === 401) {
-      // 401 에러 발생 시 /index 로 이동
-      window.location.href = "/";
+    if (
+      error.response &&
+      (error.response.status === 401 || error.response.status === 403)
+    ) {
+      window.location.href = "/login";
     }
-    return Promise.reject(error); // 에러는 그대로 전달
+    return Promise.reject(error);
   }
 );
 
