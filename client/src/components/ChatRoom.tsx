@@ -1,14 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ChatInput from "./ChatInput";
 import ChatRoomHeader from "./ChatRoomHeader";
 import MessageList from "./MessageList";
-import { getChatMessages } from "../hooks/api";
+import { getChatMessages, getSessionUserInfo } from "../hooks/api";
 import type { ChatMessage } from "../types/chat-message";
 import type { ChatRoom } from "../types/chat-room";
+import type { SessionUserInfo } from "../types/user";
+import { useStompClient } from "../hooks/useStompClient";
+import type { Client } from "@stomp/stompjs";
 
 function ChatRoom({ chatRoom }: { chatRoom: ChatRoom }) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const chatRoomId = chatRoom?.id;
+  const [userInfo, setUserInfo] = useState<SessionUserInfo>({
+    id: 0,
+    username: "",
+  });
+  const clientRef = useRef<Client | null>(null);
+  const chatRoomId = chatRoom.id;
+  const jwtToken = sessionStorage.getItem("jwt");
 
   useEffect(() => {
     if (!chatRoomId) {
@@ -16,19 +25,36 @@ function ChatRoom({ chatRoom }: { chatRoom: ChatRoom }) {
       return;
     }
 
-    // 예: 채팅 메시지 로드, WebSocket 연결 등
+    //이전 채팅 메시지 목록 가져오기
     getChatMessages(chatRoomId).then((messages) => {
       setMessages(messages);
     });
-  }, [chatRoomId]);
 
-  if (!chatRoom) {
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <p className="text-gray-500">채팅방을 생성하거나 선택하세요.</p>
-      </div>
-    );
-  }
+    //세션유저
+    getSessionUserInfo().then((info) => {
+      setUserInfo(info);
+    });
+  }, [chatRoom]);
+
+  useStompClient({
+    clientRef: clientRef,
+    roomId: chatRoomId,
+    jwtToken: jwtToken,
+    onRecievedMessage: (message) => {
+      console.log("수신받은 메시지~~~", message);
+      setMessages((prev) => [...prev, message]);
+    },
+  });
+
+  const onSubmitMessage = (message: string) => {
+    clientRef.current?.publish({
+      destination: `/app/chat/${chatRoomId}`,
+      body: JSON.stringify({ content: message }),
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    });
+  };
 
   return (
     <div className="w-full h-screen flex flex-col">
@@ -36,10 +62,10 @@ function ChatRoom({ chatRoom }: { chatRoom: ChatRoom }) {
       <ChatRoomHeader chatRoom={chatRoom} />
 
       {/* 채팅 영역 */}
-      <MessageList messages={messages} />
+      <MessageList messages={messages} userInfo={userInfo} />
 
       {/* 채팅창 영역 */}
-      <ChatInput />
+      <ChatInput onSubmitMessage={onSubmitMessage} />
     </div>
   );
 }

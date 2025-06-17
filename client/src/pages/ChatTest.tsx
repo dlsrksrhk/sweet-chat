@@ -51,7 +51,7 @@ const ChatTest = () => {
       destination: `/app/chat/${roomId}`,
       body: JSON.stringify(payload),
       headers: {
-        Authorization: "Bearer " + jwtToken,
+        Authorization: `Bearer ${jwtToken}`,
       },
     });
   };

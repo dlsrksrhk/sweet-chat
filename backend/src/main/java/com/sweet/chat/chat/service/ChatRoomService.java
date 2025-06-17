@@ -1,6 +1,5 @@
 package com.sweet.chat.chat.service;
 
-import com.sweet.chat.chat.api.command.ChatRoomResponse;
 import com.sweet.chat.chat.domain.ChatRoom;
 
 import java.util.List;

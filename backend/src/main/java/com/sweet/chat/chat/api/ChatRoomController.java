@@ -1,9 +1,10 @@
 package com.sweet.chat.chat.api;
 
 import com.sweet.chat.chat.api.command.ChatRoomCreateRequest;
-import com.sweet.chat.chat.api.command.ChatRoomResponse;
+import com.sweet.chat.chat.dto.ChatRoomResponse;
 import com.sweet.chat.chat.domain.ChatRoom;
 import com.sweet.chat.chat.service.ChatRoomService;
+import com.sweet.chat.chat.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +21,7 @@ import java.util.List;
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
+    private final ChatService chatService;
 
     @PostMapping("/api/chatrooms")
     public ResponseEntity<?> createChatRoom(@RequestBody ChatRoomCreateRequest request,
@@ -44,6 +46,7 @@ public class ChatRoomController {
                         .name(room.getName())
                         .createdBy(room.getCreatedBy().getUsername())
                         .createdAt(room.getCreatedAt())
+                        .lastMessageInfo(chatService.findLastMessageByRoomId(room.getId()))
                         .build())
                 .toList();
 

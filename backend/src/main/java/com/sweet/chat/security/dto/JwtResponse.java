@@ -1,4 +1,4 @@
-package com.sweet.chat.security.api.command;
+package com.sweet.chat.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

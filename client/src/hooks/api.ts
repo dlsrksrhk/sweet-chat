@@ -1,6 +1,7 @@
 import axios, { AxiosError, type AxiosRequestConfig } from "axios";
 import type { ChatMessage } from "../types/chat-message";
 import type { ChatRoom } from "../types/chat-room";
+import type { SessionUserInfo } from "../types/user";
 
 const getAxiosConfig = (): AxiosRequestConfig => {
   const token = sessionStorage.getItem("jwt");
@@ -23,6 +24,15 @@ axios.interceptors.response.use(
     return Promise.reject(error); // 에러는 그대로 전달
   }
 );
+
+export const getSessionUserInfo = async (): Promise<SessionUserInfo> => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}/api/session/userinfo`,
+    getAxiosConfig()
+  );
+
+  return response.data;
+};
 
 export const getChatMessages = async (
   roomId: number

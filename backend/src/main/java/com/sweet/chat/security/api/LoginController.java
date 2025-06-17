@@ -1,6 +1,6 @@
 package com.sweet.chat.security.api;
 
-import com.sweet.chat.security.api.command.JwtResponse;
+import com.sweet.chat.security.dto.JwtResponse;
 import com.sweet.chat.security.api.command.LoginRequest;
 import com.sweet.chat.security.service.LoginService;
 import lombok.RequiredArgsConstructor;

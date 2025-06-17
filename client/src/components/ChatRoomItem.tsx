@@ -1,4 +1,6 @@
 import type { ChatRoom } from "../types/chat-room";
+import { formatDistanceToNow } from "date-fns";
+import { ko } from "date-fns/locale";
 
 function ChatRoomItem({
   chatRoom,
@@ -19,7 +21,11 @@ function ChatRoomItem({
       <div>
         <p className="text-black font-bold text-lg">{chatRoom.name}</p>
         <p className="text-gray-500 text-sm">
-          {chatRoom && new Date(chatRoom.createdAt).toLocaleString()}
+          {chatRoom.lastMessageInfo &&
+            formatDistanceToNow(new Date(chatRoom.lastMessageInfo.timestamp), {
+              addSuffix: true,
+              locale: ko,
+            })}
         </p>
       </div>
     </div>

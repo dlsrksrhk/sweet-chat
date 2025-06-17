@@ -63,14 +63,15 @@ public class ChatServiceImpl implements ChatService {
         List<ChatMessage> chatMessages = chatMessageRepository.findByRoomIdOrderBySendedAtAsc(roomId);
 
         return chatMessages.stream()
-                .map(chatMessage -> {
-                    ChatMessageDto msg = new ChatMessageDto();
-                    msg.setRoomId(roomId);
-                    msg.setSender(chatMessage.getSender().getUsername());
-                    msg.setContent(chatMessage.getContent());
-                    msg.setTimestamp(chatMessage.getSendedAt());
-                    return msg;
-                })
+                .map(ChatMessageDto::from)
                 .toList();
+    }
+
+    @Override
+    public ChatMessageDto findLastMessageByRoomId(Long roomId) {
+        ChatMessage lastChatMessage = chatMessageRepository.findFirstByRoomIdOrderBySendedAtDesc(roomId);
+        if(lastChatMessage == null) return null;
+
+        return ChatMessageDto.from(lastChatMessage);
     }
 }

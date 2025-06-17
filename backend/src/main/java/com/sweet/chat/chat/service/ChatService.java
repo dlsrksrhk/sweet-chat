@@ -13,4 +13,6 @@ public interface ChatService {
     ChatMessage saveMessage(ChatRoom chatRoom, String message, User sender);
 
     List<ChatMessageDto> getChatHistoryByRoomId(Long roomId);
+
+    ChatMessageDto findLastMessageByRoomId(Long roomId);
 }

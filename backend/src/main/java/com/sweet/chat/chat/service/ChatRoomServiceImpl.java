@@ -21,7 +21,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
     @Override
     public List<ChatRoom> getAllChatRooms() {
-        return chatRoomRepository.findAllByOrderByCreatedAtDesc();
+        return chatRoomRepository.findAllByOrderByCreatedAtAsc();
     }
 
     @Override

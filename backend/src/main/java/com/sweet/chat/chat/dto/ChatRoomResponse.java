@@ -1,4 +1,4 @@
-package com.sweet.chat.chat.api.command;
+package com.sweet.chat.chat.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -12,4 +12,5 @@ public class ChatRoomResponse {
     private String name;
     private String createdBy;
     private LocalDateTime createdAt;
+    private ChatMessageDto lastMessageInfo;
 }
