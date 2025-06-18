@@ -9,7 +9,6 @@ import com.sweet.chat.chat.repository.ChatRoomRepository;
 import com.sweet.chat.user.domain.User;
 import com.sweet.chat.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class ChatServiceImpl implements ChatService {
-    private final SimpMessagingTemplate messagingTemplate;
+    private final ChatMessageSender chatMessageSender;
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final UserRepository userRepository;
@@ -44,7 +43,7 @@ public class ChatServiceImpl implements ChatService {
         message.setSender(sender.getUsername());
         message.setTimestamp(chatMessage.getSendedAt());
 
-        messagingTemplate.convertAndSend("/topic/chatroom." + roomId, message);
+        chatMessageSender.sendMessage(roomId, message);
     }
 
     @Override
@@ -70,7 +69,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatMessageDto findLastMessageByRoomId(Long roomId) {
         ChatMessage lastChatMessage = chatMessageRepository.findFirstByRoomIdOrderBySendedAtDesc(roomId);
-        if(lastChatMessage == null) return null;
+        if (lastChatMessage == null) return null;
 
         return ChatMessageDto.from(lastChatMessage);
     }
