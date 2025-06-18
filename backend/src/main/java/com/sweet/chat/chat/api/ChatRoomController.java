@@ -1,8 +1,9 @@
 package com.sweet.chat.chat.api;
 
 import com.sweet.chat.chat.api.command.ChatRoomCreateRequest;
-import com.sweet.chat.chat.dto.ChatRoomResponse;
+import com.sweet.chat.chat.api.command.ChatRoomJoinRequest;
 import com.sweet.chat.chat.domain.ChatRoom;
+import com.sweet.chat.chat.dto.ChatRoomResponse;
 import com.sweet.chat.chat.service.ChatRoomService;
 import com.sweet.chat.chat.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +39,10 @@ public class ChatRoomController {
     }
 
     @GetMapping("/api/chatrooms")
-    public ResponseEntity<List<ChatRoomResponse>> getAllChatRooms() {
-        List<ChatRoom> rooms = chatRoomService.getAllChatRooms();
+    public ResponseEntity<List<ChatRoomResponse>> getAllJoinedChatRooms(
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        List<ChatRoom> rooms = chatRoomService.getChatRoomsByUserName(userDetails.getUsername());
         List<ChatRoomResponse> result = rooms.stream()
                 .map(room -> ChatRoomResponse.builder()
                         .id(room.getId())
@@ -51,5 +54,14 @@ public class ChatRoomController {
                 .toList();
 
         return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/api/chatrooms/join")
+    public ResponseEntity<Void> joinChatRoom(
+            @RequestBody ChatRoomJoinRequest request,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+
+        return ResponseEntity.ok().build();
     }
 }

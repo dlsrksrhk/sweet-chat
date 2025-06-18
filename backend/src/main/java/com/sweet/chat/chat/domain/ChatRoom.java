@@ -26,4 +26,9 @@ public class ChatRoom {
     private User createdBy;
 
     private LocalDateTime createdAt;
+
+    public boolean isRoomOwner(User user) {
+        if(user == null) return false;
+        return this.createdBy.getId().equals(user.getId());
+    }
 }

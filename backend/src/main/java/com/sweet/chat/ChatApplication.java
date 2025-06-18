@@ -35,12 +35,15 @@ public class ChatApplication implements CommandLineRunner {
 
         User user1 = userService.createUser("testUser", "1234");
         User user2 = userService.createUser("testUser2", "1234");
-        ChatRoom chatRoom = chatRoomService.createChatRoom("testUser", "한경선");
-        chatRoomService.createChatRoom("testUser2", "스윗코드 단체방");
+        ChatRoom chatRoom1 = chatRoomService.createChatRoom(user1.getUsername(), "한경선");
+        chatRoomService.joinChatRoom(chatRoom1.getId(), user1.getUsername(), user2.getUsername());
 
-        chatService.saveMessage(chatRoom, "하이루!", user1);
-        chatService.saveMessage(chatRoom, "하위~~!", user2);
-        chatService.saveMessage(chatRoom, "머하누?", user1);
-        chatService.saveMessage(chatRoom, "한우 먹는중 ㅋㅋㅋ", user2);
+        ChatRoom chatRoom2 = chatRoomService.createChatRoom("testUser2", "스윗코드 단체방");
+        chatRoomService.joinChatRoom(chatRoom2.getId(), user2.getUsername(), user1.getUsername());
+
+        chatService.saveMessage(chatRoom1, "하이루!", user1);
+        chatService.saveMessage(chatRoom1, "하위~~!", user2);
+        chatService.saveMessage(chatRoom1, "머하누?", user1);
+        chatService.saveMessage(chatRoom1, "한우 먹는중 ㅋㅋㅋ", user2);
     }
 }

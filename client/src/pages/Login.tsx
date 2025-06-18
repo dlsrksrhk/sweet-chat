@@ -45,9 +45,15 @@ function Login() {
     <main className="h-screen w-screen flex flex-col justify-center items-center bg-gradient-to-br from-purple-50 to-light-blue-50">
       <div className="flex flex-col gap-4 w-100">
         <div className="pt-10 pb-6 px-10 w-full flex flex-col items-center justify-center max-w-lg border border-gray-400 bg-white gap-2">
-          <h1 className="text-5xl mb-10 text-green-400">Sweet Chat</h1>
+          <h1 className="text-5xl mb-10">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+              Sweet Chat
+            </span>
+          </h1>
           <div className="flex items-center w-full">
-            <label className="w-17">계정 :</label>
+            <label className="w-17">
+              계&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;정 :
+            </label>
             <input
               type="text"
               name="username"
@@ -65,7 +71,8 @@ function Login() {
             />
           </div>
           <button
-            className="w-45 bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 mt-5 cursor-pointer"
+            className="w-45 bg-gradient-to-r from-purple-400 to-blue-400 text-white rounded-md p-2 
+            hover:from-purple-500 hover:to-blue-500 mt-5 cursor-pointer"
             onClick={handleLogin}
           >
             로그인

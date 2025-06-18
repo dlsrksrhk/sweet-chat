@@ -18,13 +18,13 @@ function Side() {
       </div>
 
       {/* Logout Button */}
-      <div>
-        <button
-          onClick={() => {
-            sessionStorage.removeItem("jwt");
-            navigate("/");
-          }}
-        >
+      <div
+        onClick={() => {
+          sessionStorage.removeItem("jwt");
+          navigate("/login"); // 로그인 페이지로 리디렉션
+        }}
+      >
+        <button>
           <Logout className="text-2xl text-deep-purple-900 cursor-pointer" />
         </button>
       </div>
