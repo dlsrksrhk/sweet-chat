@@ -32,7 +32,7 @@ function MessageList({
     >
       {messages?.map((message, index) => (
         <Message
-          key={index}
+          key={message.id}
           message={message.content}
           type={message.sender === userInfo.username ? "send" : "receive"}
         />

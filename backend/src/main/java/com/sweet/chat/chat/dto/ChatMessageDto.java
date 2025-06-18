@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class ChatMessageDto {
+    private Long id;
     private Long roomId;
     private String sender;
     private String content;
@@ -21,6 +22,7 @@ public class ChatMessageDto {
 
     public static ChatMessageDto from(ChatMessage chatMessage) {
         return ChatMessageDto.builder()
+                .id(chatMessage.getId())
                 .roomId(chatMessage.getRoom().getId())
                 .sender(chatMessage.getSender().getUsername())
                 .content(chatMessage.getContent())
