@@ -12,7 +12,7 @@ public interface ChatService {
     void sendMessage(Long roomId, SendChatMessageRequest request, String userLoginId);
     ChatMessage saveMessage(ChatRoom chatRoom, String message, User sender);
 
-    List<ChatMessageDto> getChatHistoryByRoomId(Long roomId);
+    List<ChatMessageDto> getChatHistoryByRoomId(Long roomId, String reqUserLoginId);
 
     ChatMessageDto findLastMessageByRoomId(Long roomId);
 }

@@ -21,6 +21,7 @@ public class ChatRoomMember {
     @ManyToOne(fetch = FetchType.LAZY)
     private User joiner;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     private ChatRoom room;
 

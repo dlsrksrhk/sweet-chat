@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { UserSignUpRequest } from "../types/user";
 import { userSingUp } from "../hooks/api";
+import ProfileImageUploader from "../components/ProfileImageUploader";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -62,7 +63,6 @@ function SignUp() {
               onChange={handleChange}
             />
           </div>
-
           <div className="flex items-center w-full">
             <label className="w-17">비밀번호 :</label>
             <input
@@ -72,7 +72,6 @@ function SignUp() {
               onChange={handleChange}
             />
           </div>
-
           <div className="flex items-center w-full">
             <label className="w-17">
               이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름 :
@@ -84,7 +83,6 @@ function SignUp() {
               onChange={handleChange}
             />
           </div>
-
           <div className="flex items-center w-full">
             <label className="w-17">이 메 일&nbsp;&nbsp;:</label>
             <input
@@ -94,7 +92,12 @@ function SignUp() {
               onChange={handleChange}
             />
           </div>
-
+          <div className="flex items-center w-full">
+            <label className="w-17">프 로 필&nbsp;&nbsp;:</label>
+            <ProfileImageUploader
+              onUploadComplete={(file) => console.log(file)}
+            />
+          </div>
           <button
             className="w-45 bg-gradient-to-r from-purple-400 to-blue-400 text-white rounded-md p-2 
               hover:from-purple-500 hover:to-blue-500 mt-5 cursor-pointer"

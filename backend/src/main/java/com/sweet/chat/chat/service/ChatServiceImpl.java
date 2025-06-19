@@ -60,7 +60,15 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public List<ChatMessageDto> getChatHistoryByRoomId(Long roomId) {
+    public List<ChatMessageDto> getChatHistoryByRoomId(Long roomId, String reqUserLoginId) {
+        ChatRoom room = chatRoomRepository.findById(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("채팅방이 존재하지 않습니다."));
+        User reqUser = userRepository.findByLoginId(reqUserLoginId).orElse(null);
+
+        if(!room.isRoomOwner(reqUser) && !room.isRoomMember(reqUser)) {
+            throw new IllegalArgumentException("채팅방에 대한 권한이 없습니다.");
+        }
+
         List<ChatMessage> chatMessages = chatMessageRepository.findByRoomIdOrderBySendedAtAsc(roomId);
 
         return chatMessages.stream()

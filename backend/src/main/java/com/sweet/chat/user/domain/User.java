@@ -26,6 +26,17 @@ public class User {
     @Column
     private String email;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserProfile profile;
+
+    public void updateProfileImage(String imageUrl) {
+        if (getProfile() == null) {
+            this.profile = new UserProfile();
+        }
+
+        this.profile.setProfileImageUrl(imageUrl);
+    }
+
     public UserDetails toUserDetails() {
         return org.springframework.security.core.userdetails.User.builder()
                 .username(this.loginId)
