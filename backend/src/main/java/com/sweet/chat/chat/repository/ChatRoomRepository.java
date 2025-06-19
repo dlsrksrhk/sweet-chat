@@ -16,7 +16,7 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
             value = "SELECT cr.* FROM chat_rooms cr " +
                     "JOIN chat_room_members crm ON cr.id = crm.room_id " +
                     "JOIN users u ON crm.joiner_id = u.id " +
-                    "WHERE u.username = :username",
+                    "WHERE u.login_id = :loginId",
             nativeQuery = true)
-    List<ChatRoom> findByJoinedUserName(@Param("username") String username);
+    List<ChatRoom> findByJoinedLoginId(@Param("loginId") String loginId);
 }

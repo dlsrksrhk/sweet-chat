@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type LoginRequest = {
-  username: string;
+  userLoginId: string;
   password: string;
 };
 
@@ -18,7 +18,7 @@ function Login() {
   }, []);
 
   const [request, setRequest] = useState<LoginRequest>({
-    username: "",
+    userLoginId: "",
     password: "",
   });
 
@@ -56,7 +56,7 @@ function Login() {
             </label>
             <input
               type="text"
-              name="username"
+              name="userLoginId"
               className="w-50 rounded-md p-1 ml-2 outline-0 border-gray-400 border-1"
               onChange={handleChange}
             />
@@ -82,7 +82,10 @@ function Login() {
 
       <div className="flex justify-center items-center w-100 h-10 text-center border border-gray-400 bg-white mt-5">
         계정이 없으신가요?
-        <button className="text-blue-600 pl-1 cursor-pointer">
+        <button
+          className="text-blue-600 pl-1 cursor-pointer"
+          onClick={() => navigate("/signup")}
+        >
           회원가입하기
         </button>
       </div>

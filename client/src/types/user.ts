@@ -1,10 +1,12 @@
-export type User = {
-  id: number;
-  username: string;
-  password: string;
-};
-
 export type SessionUserInfo = {
   id: number;
-  username: string;
+  loginId: string;
+  userName: string;
+};
+
+export type UserSignUpRequest = {
+  loginId: string;
+  userName: string;
+  password: string;
+  email: string;
 };

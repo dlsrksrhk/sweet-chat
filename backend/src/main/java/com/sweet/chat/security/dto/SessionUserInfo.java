@@ -7,5 +7,6 @@ import lombok.Data;
 @Builder
 public class SessionUserInfo {
     private Long id;
-    private String username;
+    private String userName;
+    private String loginId;
 }

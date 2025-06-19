@@ -33,7 +33,8 @@ public class ChatRoomController {
         return ResponseEntity.ok(ChatRoomResponse.builder()
                 .id(chatRoom.getId())
                 .name(chatRoom.getName())
-                .createdBy(userDetails.getUsername())
+                .createdByUserName(chatRoom.getCreatedBy().getUserName())
+                .createdByUserLoginId(chatRoom.getCreatedBy().getLoginId())
                 .createdAt(chatRoom.getCreatedAt())
                 .build());
     }
@@ -42,12 +43,13 @@ public class ChatRoomController {
     public ResponseEntity<List<ChatRoomResponse>> getAllJoinedChatRooms(
             @AuthenticationPrincipal UserDetails userDetails
     ) {
-        List<ChatRoom> rooms = chatRoomService.getChatRoomsByUserName(userDetails.getUsername());
+        List<ChatRoom> rooms = chatRoomService.getChatRoomsByUserLoginId(userDetails.getUsername());
         List<ChatRoomResponse> result = rooms.stream()
                 .map(room -> ChatRoomResponse.builder()
                         .id(room.getId())
                         .name(room.getName())
-                        .createdBy(room.getCreatedBy().getUsername())
+                        .createdByUserName(room.getCreatedBy().getUserName())
+                        .createdByUserLoginId(room.getCreatedBy().getLoginId())
                         .createdAt(room.getCreatedAt())
                         .lastMessageInfo(chatService.findLastMessageByRoomId(room.getId()))
                         .build())

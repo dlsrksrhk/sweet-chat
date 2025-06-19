@@ -36,8 +36,10 @@ export const useStompClient = ({
         stompClient.subscribe(`/topic/chatroom.${roomId}`, (message) => {
           const payload = JSON.parse(message.body);
           const recievedMessage: ChatMessage = {
+            id: payload.id,
             roomId: payload.roomId,
-            sender: payload.sender,
+            senderLoginId: payload.senderLoginId,
+            senderUserName: payload.senderUserName,
             content: payload.content,
             timestamp: payload.timestamp,
           };

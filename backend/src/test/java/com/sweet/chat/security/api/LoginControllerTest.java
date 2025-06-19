@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static com.sweet.chat.common.TestFactory.TEST_USER_NAME_2;
 import static com.sweet.chat.common.TestFactory.TEST_USER_PASSWORD;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,10 +37,14 @@ class LoginControllerTest {
     @Test
     @DisplayName("로그인 성공")
     void loginSuccess() throws Exception {
-        userRepository.save(TestFactory.createUser("loginuser", passwordEncoder.encode("1234")));
+        userRepository.save(TestFactory.createUser(
+                TestFactory.TEST_USER_NAME_1,
+                TestFactory.TEST_USER_NAME_1,
+                passwordEncoder.encode("1234"),
+                TestFactory.TEST_USER_EMAIL_1));
 
         LoginRequest request = new LoginRequest();
-        request.setUsername(TEST_USER_NAME_2);
+        request.setUserLoginId(TestFactory.TEST_USER_NAME_1);
         request.setPassword(TEST_USER_PASSWORD);
 
         mockMvc.perform(post("/api/login")

@@ -15,16 +15,16 @@ public class JwtUtil {
 
     private static final long EXPIRATION_TIME = 86400000; // 1 day
 
-    public String generateToken(String username) {
+    public String generateToken(String loginId) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(loginId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
-    public String extractUsername(String token) {
+    public String extractUserName(String token) {
         return Jwts.parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)

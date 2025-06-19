@@ -19,13 +19,13 @@ public class LoginServiceImpl implements LoginService {
 
 
     @Override
-    public String login(String username, String password) {
-        User user = userService.findByUsername(username);
+    public String login(String loginId, String password) {
+        User user = userService.findByLoginId(loginId);
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("입력한 정보가 잘못되었습니다.");
         }
 
-        return jwtUtil.generateToken(user.getUsername());
+        return jwtUtil.generateToken(user.getLoginId());
     }
 }

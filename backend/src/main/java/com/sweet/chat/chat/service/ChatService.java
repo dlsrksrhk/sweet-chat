@@ -9,7 +9,7 @@ import com.sweet.chat.user.domain.User;
 import java.util.List;
 
 public interface ChatService {
-    void sendMessage(Long roomId, SendChatMessageRequest request, String username);
+    void sendMessage(Long roomId, SendChatMessageRequest request, String userLoginId);
     ChatMessage saveMessage(ChatRoom chatRoom, String message, User sender);
 
     List<ChatMessageDto> getChatHistoryByRoomId(Long roomId);

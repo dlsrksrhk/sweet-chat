@@ -26,7 +26,7 @@ public class ChatController {
                             SendChatMessageRequest request,
                             Principal principal) {
 
-        String username = principal.getName();
-        chatService.sendMessage(roomId, request, username);
+        String userLoginId = principal.getName();
+        chatService.sendMessage(roomId, request, userLoginId);
     }
 }

@@ -15,14 +15,20 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String loginId;
 
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String userName;
+
+    @Column
+    private String email;
+
     public UserDetails toUserDetails() {
         return org.springframework.security.core.userdetails.User.builder()
-                .username(this.username)
+                .username(this.loginId)
                 .password(this.password)
                 .build();
     }

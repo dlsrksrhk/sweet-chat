@@ -2,5 +2,5 @@ package com.sweet.chat.security.service;
 
 public interface LoginService {
 
-    String login(String username, String password);
+    String login(String loginId, String password);
 }

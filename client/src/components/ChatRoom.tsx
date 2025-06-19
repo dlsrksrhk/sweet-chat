@@ -13,7 +13,7 @@ function ChatRoom({ chatRoom }: { chatRoom: ChatRoom }) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [userInfo, setUserInfo] = useState<SessionUserInfo>({
     id: 0,
-    username: "",
+    loginId: "",
   });
   const clientRef = useRef<Client | null>(null);
   const chatRoomId = chatRoom.id;

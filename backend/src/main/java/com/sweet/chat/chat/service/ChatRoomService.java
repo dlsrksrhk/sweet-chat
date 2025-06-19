@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface ChatRoomService {
     List<ChatRoom> getAllChatRooms();
-    List<ChatRoom> getChatRoomsByUserName(String userName);
+    List<ChatRoom> getChatRoomsByUserLoginId(String loginId);
 
-    ChatRoom createChatRoom(String userName, String chatRoomName);
+    ChatRoom createChatRoom(String userLoginId, String chatRoomName);
 
-    void joinChatRoom(Long roomId, String reqUserName, String targetUserName);
+    void joinChatRoom(Long roomId, String reqUserLoginId, String targetUserLoginId);
 }

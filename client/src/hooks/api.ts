@@ -1,7 +1,7 @@
 import axios, { AxiosError, type AxiosRequestConfig } from "axios";
 import type { ChatMessage } from "../types/chat-message";
 import type { ChatRoom } from "../types/chat-room";
-import type { SessionUserInfo } from "../types/user";
+import type { SessionUserInfo, UserSignUpRequest } from "../types/user";
 
 const getAxiosConfig = (): AxiosRequestConfig => {
   const token = sessionStorage.getItem("jwt");
@@ -60,6 +60,17 @@ export const getChatRoomList = async (): Promise<ChatRoom[]> => {
   const response = await axios.get(
     `${import.meta.env.VITE_API_BASE_URL}/api/chatrooms`,
     getAxiosConfig()
+  );
+
+  return response.data;
+};
+
+export const userSingUp = async (
+  signUpRequest: UserSignUpRequest
+): Promise<ChatRoom> => {
+  const response = await axios.post(
+    `${import.meta.env.VITE_API_BASE_URL}/api/user/signup`,
+    signUpRequest
   );
 
   return response.data;

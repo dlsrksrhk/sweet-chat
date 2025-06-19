@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static com.sweet.chat.common.TestFactory.TEST_USER_NAME_1;
-import static com.sweet.chat.common.TestFactory.TEST_USER_PASSWORD;
+import static com.sweet.chat.common.TestFactory.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -22,7 +21,11 @@ class ChatRoomServiceTest {
 
     @BeforeEach
     void setUp() {
-        userService.createUser(TEST_USER_NAME_1, TEST_USER_PASSWORD);
+        userService.createUser(
+                TEST_USER_NAME_1,
+                TEST_USER_NAME_1,
+                TEST_USER_PASSWORD,
+                TEST_USER_EMAIL_1);
     }
 
     @Test

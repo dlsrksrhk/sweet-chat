@@ -26,21 +26,23 @@ public class ChatServiceImpl implements ChatService {
     private final UserRepository userRepository;
 
     @Override
-    public void sendMessage(Long roomId, SendChatMessageRequest request, String username) {
+    public void sendMessage(Long roomId, SendChatMessageRequest request, String userLoginId) {
         ChatRoom room = chatRoomRepository.findById(roomId)
                 .orElseThrow(() -> new IllegalArgumentException("채팅방이 존재하지 않습니다."));
 
-        User sender = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username));
+        User sender = userRepository.findByLoginId(userLoginId)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + userLoginId));
 
         // DB에 메시지 저장
         ChatMessage chatMessage = saveMessage(room, request.getContent(), sender);
 
         // 브로드캐스트할 메시지
         ChatMessageDto message = new ChatMessageDto();
+        message.setId(chatMessage.getId());
         message.setRoomId(roomId);
         message.setContent(request.getContent());
-        message.setSender(sender.getUsername());
+        message.setSenderLoginId(sender.getLoginId());
+        message.setSenderUserName(sender.getUserName());
         message.setTimestamp(chatMessage.getSendedAt());
 
         chatMessageSender.sendMessage(roomId, message);

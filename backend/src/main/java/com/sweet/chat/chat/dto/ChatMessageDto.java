@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
 public class ChatMessageDto {
     private Long id;
     private Long roomId;
-    private String sender;
+    private String senderLoginId;
+    private String senderUserName;
     private String content;
     private LocalDateTime timestamp;
 
@@ -24,7 +25,8 @@ public class ChatMessageDto {
         return ChatMessageDto.builder()
                 .id(chatMessage.getId())
                 .roomId(chatMessage.getRoom().getId())
-                .sender(chatMessage.getSender().getUsername())
+                .senderLoginId(chatMessage.getSender().getLoginId())
+                .senderUserName(chatMessage.getSender().getUserName())
                 .content(chatMessage.getContent())
                 .timestamp(chatMessage.getSendedAt())
                 .build();

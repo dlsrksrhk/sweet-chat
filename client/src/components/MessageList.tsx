@@ -46,7 +46,7 @@ function MessageList({
         <Message
           key={message.id}
           message={message.content}
-          type={message.sender === userInfo.username ? "send" : "receive"}
+          type={message.senderLoginId === userInfo.loginId ? "send" : "receive"}
         />
       ))}
       <div ref={scrollBottomRef} />

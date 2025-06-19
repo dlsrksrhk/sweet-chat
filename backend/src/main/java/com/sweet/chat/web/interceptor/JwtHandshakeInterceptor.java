@@ -30,9 +30,9 @@ public class JwtHandshakeInterceptor implements HandshakeInterceptor {
 
         if (query != null && query.startsWith("token=")) {
             String token = query.substring("token=".length());
-            String username = jwtUtil.extractUsername(token);
-            if (username != null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            String userName = jwtUtil.extractUserName(token);
+            if (userName != null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
