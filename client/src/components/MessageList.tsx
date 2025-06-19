@@ -4,9 +4,11 @@ import type { SessionUserInfo } from "../types/user";
 import Message from "./Message";
 
 function MessageList({
+  chatRoomId,
   messages,
   userInfo,
 }: {
+  chatRoomId: number;
   messages: ChatMessage[];
   userInfo: SessionUserInfo;
 }) {
@@ -24,6 +26,16 @@ function MessageList({
       scrollBottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  useEffect(() => {
+    console.log("채팅방이 변경되었습니다:", chatRoomId, messages.length);
+    setTimeout(() => {
+      scrollTopRef.current?.scrollTo({
+        top: scrollTopRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }, 500);
+  }, [chatRoomId]);
 
   return (
     <div

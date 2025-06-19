@@ -34,7 +34,7 @@ function ChatRoom({ chatRoom }: { chatRoom: ChatRoom }) {
     getSessionUserInfo().then((info) => {
       setUserInfo(info);
     });
-  }, [chatRoom]);
+  }, [chatRoomId]);
 
   useStompClient({
     clientRef: clientRef,
@@ -62,7 +62,11 @@ function ChatRoom({ chatRoom }: { chatRoom: ChatRoom }) {
       <ChatRoomHeader chatRoom={chatRoom} />
 
       {/* 채팅 영역 */}
-      <MessageList messages={messages} userInfo={userInfo} />
+      <MessageList
+        chatRoomId={chatRoomId}
+        messages={messages}
+        userInfo={userInfo}
+      />
 
       {/* 채팅창 영역 */}
       <ChatInput onSubmitMessage={onSubmitMessage} />
