@@ -92,12 +92,6 @@ function SignUp() {
               onChange={handleChange}
             />
           </div>
-          <div className="flex items-center w-full">
-            <label className="w-17">프 로 필&nbsp;&nbsp;:</label>
-            <ProfileImageUploader
-              onUploadComplete={(file) => console.log(file)}
-            />
-          </div>
           <button
             className="w-45 bg-gradient-to-r from-purple-400 to-blue-400 text-white rounded-md p-2 
               hover:from-purple-500 hover:to-blue-500 mt-5 cursor-pointer"
